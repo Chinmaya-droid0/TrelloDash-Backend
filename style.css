@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ── Trello-authentic board background ── */
+body {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #0052CC;
+    background-image:
+        linear-gradient(135deg, #0747A6 0%, #0052CC 50%, #0065FF 100%);
+    padding: 40px 20px;
+}
+
+/* ── Board wrapper ── */
+.board {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+/* ── Column card — Trello's light-grey list ── */
+.column {
+    background-color: #EBECF0;
+    width: 272px;
+    min-height: 100px;
+    padding: 10px 8px 8px 8px;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(9, 30, 66, 0.25);
+}
+
+/* ── Column header ── */
+.column h2 {
+    text-align: left;
+    color: #172B4D;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+    padding: 4px 8px 6px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.column h2:hover {
+    background-color: rgba(9, 30, 66, 0.08);
+}
+
+/* ── Tasks container — cards stack here ── */
+.tasks {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+/* ── Individual task card (for any .task children JS might add) ── */
+.tasks .task,
+.tasks > div {
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    padding: 8px 10px;
+    font-size: 14px;
+    color: #172B4D;
+    box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+    cursor: pointer;
+    transition: background-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.tasks .task:hover,
+.tasks > div:hover {
+    background-color: #F4F5F7;
+    box-shadow: 0 4px 8px rgba(9, 30, 66, 0.2);
+}
+
+/* ── Text input — Trello-style card composer ── */
+.task-input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 3px;
+    border: none;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 0 0 2px #DFE1E6;
+    margin-top: 4px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    color: #172B4D;
+    outline: none;
+    transition: box-shadow 0.15s ease;
+}
+
+.task-input::placeholder {
+    color: #7A869A;
+}
+
+.task-input:focus {
+    box-shadow: inset 0 0 0 2px #0052CC;
+    background-color: #FFFFFF;
+}
+
+/* ── Add Task button — Trello's green "Add card" ── */
+.add-task {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 3px;
+    border: none;
+    background-color: #0052CC;
+    margin-top: 6px;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: none;
+}
+
+.add-task:hover {
+    background-color: #0747A6;
+    box-shadow: 0 1px 4px rgba(9, 30, 66, 0.35);
+}
+
+.add-task:active {
+    background-color: #0052CC;
+    transform: scale(0.98);
+}
+
+/* ── Column colour-coded top accent ── */
+#todo    { border-top: 3px solid #FF5630; }
+#doing   { border-top: 3px solid #FF991F; }
+#done    { border-top: 3px solid #36B37E; }
