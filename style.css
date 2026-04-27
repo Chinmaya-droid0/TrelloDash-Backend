@@ -65,6 +65,7 @@ body {
 /* ── Individual task card (for any .task children JS might add) ── */
 .tasks .task,
 .tasks > div {
+    position: relative;
     background-color: #FFFFFF;
     border-radius: 3px;
     padding: 8px 10px;
@@ -134,6 +135,27 @@ body {
     transform: scale(0.98);
 }
 
+.context-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    padding: 10px 0px;
+    border-radius: 4px;
+}
+
+.context-menu ul li {
+    font-family: "Poppins", sans-serif;
+    list-style: none;
+    padding: 8px 20px ;
+    cursor: pointer;
+    color:#000000 ;
+
+}
+
+.time{
+    text-align: end;
+    display: block;
+}
 /* ── Column colour-coded top accent ── */
 #todo    { border-top: 3px solid #FF5630; }
 #doing   { border-top: 3px solid #FF991F; }
