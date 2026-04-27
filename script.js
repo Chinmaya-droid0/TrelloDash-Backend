@@ -13,7 +13,7 @@ const taskDate = new Date().toLocaleString();
 const taskElement = createTaskElement(taskText, taskDate);
 
 document.getElementById(`${id}-tasks`).appendChild(taskElement);  
-
+upadteTasksCount(id);
 input.value = " ";
 }
 
@@ -39,6 +39,9 @@ function dragStart(){
 
 function dragEnd(){
     this.classList.remove("dragging");
+    ["todo", "doing", "done"].forEach((id) => {
+        upadteTasksCount(id);
+    })
 }
 
 const columns = document.querySelectorAll(".column  .tasks");
@@ -76,11 +79,15 @@ function editTask(){
 
 function deleteTask() {
     if(rightClickedCard !== null){
-        rightClickedCard.remove();
+      const parentColumn = rightClickedCard.closest(".column");
+      rightClickedCard.remove();
+      if(parentColumn){
+        upadteTasksCount(parentColumn.id);
+      }
     }
 }
 
 function upadteTasksCount(id) {
-    const count = document.querySelectorAll(`#${id}-tasks .tasks`).length;
+    const count = document.querySelectorAll(`#${id}-tasks .task`).length;
     document.getElementById(`${id}-count`).textContent = count;
 }
