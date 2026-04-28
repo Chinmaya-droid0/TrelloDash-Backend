@@ -67,8 +67,20 @@ const columns = document.querySelectorAll(".column  .tasks");
  } 
 
  function getDragAfterElement(container, y) {
-      let result;
-      return result;
+     const draggableElements = [...container.querySelectorAll(".task:not(.dragging)"),];
+
+     const result = draggableElements.reduce((closestElementUnderMouse, currentTask)=>{
+        const box = currentTask.getBoundingClientRect();
+        const offset = y - box.top - box.height/2;
+        if(offset < 0 && offset > closestElementUnderMouse.offset){
+            return {offset: offset, element: currentTask};
+        } else{
+            return closestElementUnderMouse;
+        }
+     },
+     {offset: Number.NEGATIVE_INFINITY}
+    );
+    return result.elememnt;
  }
 
  const contextmenu = document.querySelector(".context-menu");
