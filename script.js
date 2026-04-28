@@ -1,5 +1,7 @@
 //let draggedCard  = null;
  let rightClickedCard = null;
+
+document.addEventListener("DOMContentLoaded", loadTasksFromLocalStorage );
 function addTask(id){
     const input = document.getElementById(`${id}-input`);
     const taskText = input.value.trim();
@@ -14,7 +16,8 @@ const taskElement = createTaskElement(taskText, taskDate);
 
 document.getElementById(`${id}-tasks`).appendChild(taskElement);  
 upadteTasksCount(id);
-input.value = " ";
+saveTasksToLocalStorage(id, taskText, taskDate);
+input.value = "";
 }
 
 function createTaskElement(taskText, taskDate){
@@ -41,6 +44,7 @@ function dragEnd(){
     this.classList.remove("dragging");
     ["todo", "doing", "done"].forEach((id) => {
         upadteTasksCount(id);
+        updateLocalStorage();
     })
 }
 
@@ -52,8 +56,20 @@ const columns = document.querySelectorAll(".column  .tasks");
  function dragOver(event){
     event.preventDefault();
     const draggedCard = document.querySelector(".dragging");
-    this.appendChild(draggedCard); 
+    //this.appendChild(draggedCard); 
+    const afterElement = getDragAfterElement(this, event.pageY);
+
+    if(afterElement === null){
+        this.appendChild(draggedCard);
+    }else{
+        this.insertBefore(draggedCard, afterElement); 
+    }
  } 
+
+ function getDragAfterElement(container, y) {
+      let result;
+      return result;
+ }
 
  const contextmenu = document.querySelector(".context-menu");
 function showContextMenu(x, y) {
@@ -71,7 +87,8 @@ function editTask(){
         const newTaskText = prompt("Edit Task -", rightClickedCard.textContent);
 
     if(newTaskText !== ""){
-        rightClickedCard.textContent = newTaskText;
+        rightClickedCard.querySelector("span").textContent = newTaskText;
+        updateLocalStorage();
     }
      }
      
@@ -83,6 +100,7 @@ function deleteTask() {
       rightClickedCard.remove();
       if(parentColumn){
         upadteTasksCount(parentColumn.id);
+        updateLocalStorage();
       }
     }
 }
@@ -90,4 +108,32 @@ function deleteTask() {
 function upadteTasksCount(id) {
     const count = document.querySelectorAll(`#${id}-tasks .task`).length;
     document.getElementById(`${id}-count`).textContent = count;
+}
+
+
+function saveTasksToLocalStorage(id, taskText, taskDate){
+    const tasks = JSON.parse(localStorage.getItem(id)) || [];
+    tasks.push({text: taskText, date: taskDate});
+    localStorage.setItem(id, JSON.stringify(tasks));
+}
+
+function loadTasksFromLocalStorage(){
+     ["todo", "doing", "done"].forEach((id)=>{
+        const tasks= JSON.parse(localStorage.getItem(id)) || [];
+        tasks.forEach(({text, date})=>{
+            const taskElement = createTaskElement(text, date);
+            document.getElementById(`${id}-tasks`).appendChild(taskElement);
+        });
+     });
+}
+function updateLocalStorage(){
+    ["todo", "doing", "done"].forEach((id)=>{
+        const tasks = [];
+        document.querySelectorAll(`#${id}-tasks .task`).forEach((card)=>{
+            const taskText = card.querySelector("span").textContent;
+            const taskDate = card.querySelector("small").textContent;
+            tasks.push({text: taskText, date: taskDate});
+        });
+        localStorage.setItem(id, JSON.stringify(tasks));
+    });
 }
